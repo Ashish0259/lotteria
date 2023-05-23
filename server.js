@@ -3,6 +3,16 @@ const dotenv = require('dotenv')
 const app = express()
 const connectDB = require('./config/db')
 const PORT = process.env.PORT || 3000
+//var CronJob = require('cron').CronJob;
+
+
+//var job2 = new CronJob('* * * * *',function() {
+//  console.log('Generating in 10 3-digit numbers minutes') 
+// TodayNumbers();
+//}
+//);
+
+//job2.start();
 
 
 dotenv.config(
@@ -21,12 +31,17 @@ app.use(express.json({
 
 connectDB();
 
+
+
+
 //==========================
 //app.get('/', (req, res) => {var datetime = new Date();console.log(datetime);res.send(datetime)})
 
 //user register url : https://localhost:3000/api/lotteryapp/auth/register
 app.use('/api/lotteryapp/auth',require('./routes/user'))
 
+
+app.use('/api/lotteryapp/tickets',require('./routes/LotteryTicketRoute'))
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`)
