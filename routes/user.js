@@ -33,23 +33,22 @@ router.post('/register',async (req,res,next) =>{
         let user_Exist = await User.findOne({phoneNumber : phoneNumber})
         
         if(user_Exist){
-            res.json({
+            return res.json({
                 success: false,
                 msg:'user already exist'
             });
         }
-
-        let user = new User();
-        user.phoneNumber = phoneNumber;
-        user.fullName = fullName;
-
-        const salt = await bcryptjs.genSalt(10);
-        user.password = await bcryptjs.hash(password,salt);
-
-        let size = 200;
-        user.avatar = "https://gravatar.com/avatar/?s="+size+"&d=retro";
-
-        await user.save()
+            let user = new User();
+            user.phoneNumber = phoneNumber;
+            user.fullName = fullName;
+    
+            const salt = await bcryptjs.genSalt(10);
+            user.password = await bcryptjs.hash(password,salt);
+    
+            let size = 200;
+            user.avatar = "https://gravatar.com/avatar/?s="+size+"&d=retro";
+    
+            await user.save()
 
         const payload = {
             user:{

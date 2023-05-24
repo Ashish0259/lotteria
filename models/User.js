@@ -15,6 +15,22 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    accuracy:{
+        type:String,
+        default:'0'
+    },
+    balance:{
+        type:String,
+        default:'0'
+    },
+    matches:{
+        type:String,
+        default:'0'
+    },
+    rank:{
+        type:String,
+        default:'0'
     }
 });
 
