@@ -32,6 +32,10 @@ const LotteryModel = new mongoose.Schema({
     closingTime:{
         type:Number,
         required:true
+    },
+    serverTime:{
+        type:Number,
+        default:getcurrentDate.getHours()
     }
 }) 
 
