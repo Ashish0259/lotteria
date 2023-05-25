@@ -133,4 +133,41 @@ router.post('/login', async(req, res, next) => {
     }
 });
 
+//get all user
+
+router.get('/getusers',async(req,res,next) =>{
+    try {
+        const user = await User.find({});
+        res.status(200).json(user);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({message:error.message});
+    }
+} )
+
+
+router.get('/getusers/:phoneNumber',async(req,res,next) =>{
+   try {
+    const { phoneNumber } = req.params;
+    if(!phoneNumber){
+        return res.status(400).json({
+            msg:'Phone number required'
+        })
+        
+    }
+    const finduser = await User.findOne({phoneNumber:phoneNumber});
+    res.status(200).json({
+        success:true,
+        data:finduser
+    })
+   } catch (error) {
+    console.log(error);
+    res.status(500).json({
+        msg:'Error'
+    })
+   }
+   
+    
+} )
+
 module.exports = router;

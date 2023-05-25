@@ -24,6 +24,14 @@ const LotteryModel = new mongoose.Schema({
     matchID:{
         type:String,
         required:true
+    },
+    openingTime:{
+        type:Number,
+        required:true
+    },
+    closingTime:{
+        type:Number,
+        required:true
     }
 }) 
 

@@ -3,12 +3,12 @@ const dotenv = require('dotenv')
 const app = express()
 const connectDB = require('./config/db')
 const PORT = process.env.PORT || 3000
-//var CronJob = require('cron').CronJob;
-
+var CronJob = require('cron').CronJob;
+const TodayNumbers = require('./functions/GenerateLotteryNo')
 
 //var job2 = new CronJob('* * * * *',function() {
 //  console.log('Generating in 10 3-digit numbers minutes') 
-// TodayNumbers();
+//  TodayNumbers();
 //}
 //);
 
