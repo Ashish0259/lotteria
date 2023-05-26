@@ -220,9 +220,14 @@ LotteryRouter.get('/ongoing',async(req,res,next) =>{
                       ]
                 }
                 ]});
+        // FILTERING MATCHES WITH MATCH_ID
+        const matches = tickets.filter(
+          (thing,index,self) => 
+          index === self.findIndex((t) => t.matchID === thing.matchID && t.category === thing.category))
+        
         res.status(200).json({
           success:true,
-          data:tickets
+          data:matches
         });
     } catch (error) {
         console.log(error.message);
@@ -241,9 +246,13 @@ LotteryRouter.get('/upcoming',async(req,res,next) =>{
         let hh = date.getHours();
         //const tickets = await LotteryModel.find({openingTime: $and[{$gte:hh},{$gt:hh}] });
         const tickets = await LotteryModel.find({openingTime:{$gt:hh}});
+
+        const matches = tickets.filter(
+          (thing,index,self) => 
+          index === self.findIndex((t) => t.matchID === thing.matchID && t.category === thing.category))
         res.status(200).json({
           success:true,
-          data:tickets
+          data:matches
         });
     } catch (error) {
         console.log(error.message);
@@ -260,9 +269,13 @@ LotteryRouter.get('/completed',async(req,res,next) =>{
         let hh = date.getHours();
         //const tickets = await LotteryModel.find({openingTime: $and[{$gte:hh},{$gt:hh}] });
         const tickets = await LotteryModel.find({closingTime:{$lt:hh}});
+
+        const matches = tickets.filter(
+          (thing,index,self) => 
+          index === self.findIndex((t) => t.matchID === thing.matchID && t.category === thing.category))
         res.status(200).json({
           success:true,
-          data:tickets
+          data:matches
         });
     } catch (error) {
         console.log(error.message);
