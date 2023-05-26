@@ -211,14 +211,25 @@ LotteryRouter.get('/ongoing',async(req,res,next) =>{
         let date = new Date(); 
         let hh = date.getHours();
         //const tickets = await LotteryModel.find({openingTime: $and[{$gte:hh},{$gt:hh}] });
-        const tickets = await LotteryModel.find({$and:[{openingTime:{$gte:hh}},{closingTime:{$gt:hh}}]});
+        const tickets = await LotteryModel.find({
+          $or:[
+                {openingTime:{$eq:hh}},
+                {$and:[
+                  {closingTime:{$gt:hh}},
+                  {openingTime:{$lt:hh}}
+                      ]
+                }
+                ]});
         res.status(200).json({
           success:true,
           data:tickets
         });
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({message:error.message});
+        res.status(500).json({
+          success:false,
+          message:error.message
+        });
     }
 } )
 
@@ -229,14 +240,16 @@ LotteryRouter.get('/upcoming',async(req,res,next) =>{
         let date = new Date(); 
         let hh = date.getHours();
         //const tickets = await LotteryModel.find({openingTime: $and[{$gte:hh},{$gt:hh}] });
-        const tickets = await LotteryModel.find({$and:[{openingTime:{$gt:hh}},{closingTime:{$gt:hh}}]});
+        const tickets = await LotteryModel.find({openingTime:{$gt:hh}});
         res.status(200).json({
           success:true,
           data:tickets
         });
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({message:error.message});
+        res.status(500).json({
+          success:false,
+          message:"No Upcoming Matches"});
     }
 } )
 
@@ -246,14 +259,17 @@ LotteryRouter.get('/completed',async(req,res,next) =>{
         let date = new Date(); 
         let hh = date.getHours();
         //const tickets = await LotteryModel.find({openingTime: $and[{$gte:hh},{$gt:hh}] });
-        const tickets = await LotteryModel.find({$and:[{openingTime:{$lt:hh}},{closingTime:{$lt:hh}}]});
+        const tickets = await LotteryModel.find({closingTime:{$lt:hh}});
         res.status(200).json({
           success:true,
           data:tickets
         });
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({message:error.message});
+        res.status(500).json({
+          success:false,
+          message:"No Match Completed"
+        });
     }
 } )
 

@@ -33,9 +33,9 @@ const LotteryModel = new mongoose.Schema({
         type:Number,
         required:true
     },
-    serverTime:{
-        type:Number,
-        default:getcurrentDate.getHours()
+    owner:{
+        type:String,
+        default:'Not Sold yet'
     }
 }) 
 
