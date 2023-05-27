@@ -268,7 +268,7 @@ LotteryRouter.get('/completed',async(req,res,next) =>{
         let date = new Date(); 
         let hh = date.getHours();
         //const tickets = await LotteryModel.find({openingTime: $and[{$gte:hh},{$gt:hh}] });
-        const tickets = await LotteryModel.find({closingTime:{$lt:hh}});
+        const tickets = await LotteryModel.find({closingTime:{$lte:hh}});
 
         const matches = tickets.filter(
           (thing,index,self) => 
