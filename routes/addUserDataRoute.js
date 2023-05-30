@@ -77,6 +77,32 @@ UserData.get('/getusersdata/:id',async(req,res,next)=>{
     }
 })
 
+// GET USER DATA WITH EMAIL
+UserData.get('/getuserdata/:email',async(req,res,next)=>{
+    const {email} = req.params;
+
+    try {
+        let user_Exist = await AddUserDataModel.findOne({email : email})
+        
+        if(!user_Exist){
+            return res.status(400).json({
+                success: false,
+                msg:'Email required'
+            });
+        }
+        const user = await AddUserDataModel.findOne({email:email});
+        res.status(200).json({   
+            success:true,
+            user:user
+        });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({
+            success:false,
+            message:error.message});
+    }
+})
+
 //UPDATE USER DATA WITH ID
 UserData.put('/updatebalance/:id',async(req,res,next)=>{
 try {
