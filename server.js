@@ -40,6 +40,8 @@ connectDB();
 //user register url : https://localhost:3000/api/lotteryapp/auth/register
 app.use('/api/lotteryapp/auth',require('./routes/user'))
 
+//USER DATA
+app.use('/api/lotteryapp/users',require('./routes/addUserDataRoute'))
 
 app.use('/api/lotteryapp/tickets',require('./routes/LotteryTicketRoute'))
 
