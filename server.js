@@ -12,8 +12,11 @@ var CronJob = require('cron').CronJob;
 //}
 //);
 
-//job2.start();
+//job2.start();//
 
+
+
+ 
 
 dotenv.config(
   {
@@ -34,6 +37,7 @@ connectDB();
 
 
 
+
 //==========================
 //app.get('/', (req, res) => {var datetime = new Date();console.log(datetime);res.send(datetime)})
 
@@ -44,6 +48,11 @@ app.use('/api/lotteryapp/auth',require('./routes/user'))
 app.use('/api/lotteryapp/users',require('./routes/addUserDataRoute'))
 
 app.use('/api/lotteryapp/tickets',require('./routes/LotteryTicketRoute'))
+
+app.use('/api/lotteryapp/results',require('./routes/LotteryResultRoute'))
+
+//daily surprise lottery route
+app.use('/api/lotteryapp/dailysurp',require('./routes/dailySurprizelottertRoute'))
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`)

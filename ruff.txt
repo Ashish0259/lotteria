@@ -1,0 +1,75 @@
+ResultLottery.post('/addLtryResult',async (req,res,next)=>{
+    try {
+        getcompletedmatches(url1).then(async function(result){
+
+            let lotteryResult = new LotteryResultModel()
+            
+            let date = new Date(); 
+            let hh = date.getHours();
+            var newResult = JSON.stringify(result);
+            // MAIN ARRAY FOR STORING DATA FROM COMPLETED MATCHES
+            let arr1 = JSON.parse(newResult) 
+            let arr2 = [];
+            let ticketarr = []; 
+            
+            
+            //console.log(Object.keys(arr1.data).length)
+            //console.log(arr1.data[14].closingTime)
+            for(var i=0; i < Object.keys(arr1.data).length;i++){
+                if(arr1.data[i].closingTime == hh){
+                    //arr2.push(arr1.data[i].matchID)
+                    //urlArray.push(url2+arr1.data[i].matchID)
+                    //console.log(arr1.data[i].matchID)
+                    
+                }
+            }
+            //console.log(arr2)
+            //console.log(urlArray)
+            //for(var i=0;i<Object.keys(urlArray).length;i++){
+            getticketsofmatches(urlArray[0]).then(async function(result2){
+                    var newResult2 = JSON.stringify(result2);
+                    let obj = JSON.parse(newResult2)
+                    for (let i = 0; i < 3; i++) {
+                        var randNum =  Math.floor(Math.random()*(9-0+1) + 0);
+                        //ticketarr[0] = ticketarr[0].push("kudhg")
+                        //ticketarr.push(obj.data[randNum].ticketNo)
+                        //console.log(randNum)
+                      }
+                    // MAIN ARRAY FOR STORING DATA of TICKETS
+                    //ticketarr.push(obj.data[5].ticketNo)
+                    //console.log(obj.data[0].matchID)
+                    
+                    
+                    console.log(ticketarr) 
+                    })
+                    
+            for(var i = 0; i<Object.keys(testArr).length;i++){
+                //lotteryResult.matchID = testArr[i];
+                getticketsofmatches(urlArray2[i]).then(async function(result3){
+                    var newResult3 = JSON.stringify(result3);
+                    let obj2= JSON.parse(newResult3);
+                    ticketarr[i] = obj2.data;
+                    
+                })
+            }    console.log(ticketarr)
+                
+                    //for(var k = 0;k<Object.keys(urlArray).length;k++){
+                    //    console.log(arr2)
+                    //}
+            
+           
+            //console.log(arr1.data[0].matchID)
+            let ltryrsltdata = new LotteryResultModelTest()
+
+            ltryrsltdata.resultdata = result;
+            await ltryrsltdata.save()
+            res.status(200).json(ltryrsltdata)
+          })
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({
+          success:false,
+          message:"No Match Completed"
+        });
+    }
+})

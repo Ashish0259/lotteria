@@ -43,7 +43,7 @@ LotteryRouter.post('/addlotterynos',async(req,res,next)=>{
                             newLotterynum.closingTime = (hh+10)
                           }
                           if(i == 5){
-                            newLotterynum.openingTime = (hh+6)
+                            newLotterynum.openingTime = (hh+8)
                             newLotterynum.closingTime = (hh+12)
                           }
                 newLotterynum.matchID = "LTG"+(getcurrentDate.getFullYear()%100)+ (getcurrentDate.getMonth()+1)+  getcurrentDate.getDate()+(i)
@@ -311,6 +311,85 @@ LotteryRouter.get('/:matchID',async(req,res,next) =>{
     
      
  } )
+
+ //SHOW TICKET ONLY WHICH ARE NOT SOLD
+ LotteryRouter.get('/notsoldTickets/:matchID',async(req,res,next)=>{
+  try {
+    const { matchID } = req.params;
+     if(!matchID){
+         return res.status(400).json({
+             msg:'Match Id required'
+         })
+         
+     }
+
+     const notsoldTickets = await LotteryModel.find({
+      $and:[
+        {matchID:matchID},
+        {status:"not_sold"}
+      ]
+     })
+     res.status(200).json({
+      success:true,
+      data:notsoldTickets
+  })
+  } catch (error) {
+    console.log(error);
+     res.status(500).json({
+         msg:'Error'
+     })
+  }
+ })
  
+//Update Lottery Tickets Value when User Buy a Ticket
+LotteryRouter.put('/updatelottery/:ticketNo',async(req,res,next)=>{
+  let ticketupdate = await LotteryModel.findOne({ticketNo:req.params.ticketNo});
+  if(!ticketupdate){
+    return res.status(400).json({
+        success:false,
+        msg:'Does not exist'
+    })
+  }
+  ticketupdate = await LotteryModel.findOneAndUpdate({ticketNo:req.params.ticketNo},req.body,{
+    new:true,
+    runValidators:true
+  })
+  if(!ticketupdate){
+    return res.status(400).json({
+        success:false,
+        msg:'Something Went Wrong',
+        data:ticketupdate
+    })
+}
+res.status(200).json({
+    success:true,
+    msg:'Successfully Updated',
+
+})
+
+})
+
+//FINDING TICKET WITH OWNER ID
+LotteryRouter.get('/owner/:owner',async(req,res,next)=>{
+  try {
+    const { owner } = req.params;
+     if(!owner){
+         return res.status(400).json({
+             msg:'owner Id required'
+         })
+         
+     }
+     const ownerid = await LotteryModel.find({owner:owner});
+     res.status(200).json({
+         success:true,
+         data:ownerid
+     })
+  } catch (error) {
+    console.log(error);
+     res.status(500).json({
+         msg:'Error'
+     })
+  }
+})
 
 module.exports = LotteryRouter;

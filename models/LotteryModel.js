@@ -19,7 +19,7 @@ const LotteryModel = new mongoose.Schema({
     },
     status:{
         type:String,
-        default:'Not Sold'
+        default:'not_sold'
     },
     matchID:{
         type:String,
@@ -35,7 +35,11 @@ const LotteryModel = new mongoose.Schema({
     },
     owner:{
         type:String,
-        default:'Not Sold yet'
+        default:'no_owner'
+    },
+    ownerName:{
+        type:String,
+        default:'no_owner' 
     }
 }) 
 
