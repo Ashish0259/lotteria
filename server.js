@@ -4,6 +4,7 @@ const app = express()
 const connectDB = require('./config/db')
 const PORT = process.env.PORT || 3000
 var CronJob = require('cron').CronJob;
+const { json } = require('body-parser');
 //const TodayNumbers = require('./functions/GenerateLotteryNo')
 
 //var job2 = new CronJob('* * * * *',function() {
@@ -14,9 +15,6 @@ var CronJob = require('cron').CronJob;
 
 //job2.start();//
 
-
-
- 
 
 dotenv.config(
   {

@@ -17,9 +17,13 @@ const LotteryModel = new mongoose.Schema({
         type:String,
         required:true
     },
-    status:{
+    tktstatus:{
         type:String,
         default:'not_sold'
+    },
+    matchstatus:{
+        type:String,
+        default:'ongoing'                  //Ongoing,Completed,Upcoming,Cancelled
     },
     matchID:{
         type:String,

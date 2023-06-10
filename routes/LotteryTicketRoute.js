@@ -326,7 +326,7 @@ LotteryRouter.get('/:matchID',async(req,res,next) =>{
      const notsoldTickets = await LotteryModel.find({
       $and:[
         {matchID:matchID},
-        {status:"not_sold"}
+        {tktstatus:"not_sold"}
       ]
      })
      res.status(200).json({

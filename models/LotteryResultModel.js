@@ -30,6 +30,10 @@ const LtryResultModel = new mongoose.Schema({
         type:String,
         default:'no_owner'
     },
+    win1Name:{
+        type:String,
+        default:'no_owner'
+    },
     win2ID:{
         type:String,
         default:'no_owner'
@@ -38,11 +42,19 @@ const LtryResultModel = new mongoose.Schema({
         type:String,
         default:'no_owner'
     },
+    win2Name:{
+        type:String,
+        default:'no_owner'
+    },
     win3ID:{
         type:String,
         default:'no_owner'
     },
     win3tktNo:{
+        type:String,
+        default:'no_owner'
+    },
+    win3Name:{
         type:String,
         default:'no_owner'
     }
