@@ -16,6 +16,10 @@ const DailyLtry = new mongoose.Schema({
     playerID:{
         type:String,
         required:true
+    },
+    duration:{
+        type:String,
+        required:true         // Daily,Weekly
     }
 }) 
 

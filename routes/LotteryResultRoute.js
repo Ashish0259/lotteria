@@ -29,7 +29,7 @@ cancelURL = "http://localhost:3000/api/lotteryapp/tickets/updatelottery/";
 // FUNCTION TO UPDATE MATCH CANCELLED
 async function updatematch(url3){
     return fetch(url3,{
-        Method:'POST',
+        Method:'PUT',
         Headers:{
             Accept: 'application.json',
             'Content-Type': 'application/json'
@@ -98,7 +98,6 @@ ResultLottery.post('/addLtryResult',async (req,res,next)=>{
     try {
 
 
-        
         getcompletedmatches(url1).then(async function(result1){
             let date = new Date(); 
             let hh = date.getHours();
@@ -106,7 +105,7 @@ ResultLottery.post('/addLtryResult',async (req,res,next)=>{
             let arr1 = JSON.parse(newResult) 
 
             for(var i=0; i < Object.keys(arr1.data).length;i++){
-                if(arr1.data[i].closingTime == 14){
+                if(arr1.data[i].closingTime == 20){
                     arr2.push(arr1.data[i].matchID)
                     urlArray.push(url2+arr1.data[i].matchID)
                     
@@ -120,12 +119,12 @@ ResultLottery.post('/addLtryResult',async (req,res,next)=>{
                     var newResult = JSON.stringify(result)
                     var obj = JSON.parse(newResult)
                     var tktcount = 0;
-                    //for(var k = 0;k<Object.keys(obj.data).length;k++){
-                    //    if(obj.data[k].tktstatus == Sold){
-                    //        tktcount = tktcount+1;
-                    //    }
-                    //}
-                        //if(tktcount == 10){
+                    for(var k = 0;k<Object.keys(obj.data).length;k++){
+                        if(obj.data[k].tktstatus == Sold){
+                            tktcount = tktcount+1;
+                        }
+                    }
+                        if(tktcount == 10){
                             let lotteryresult = new LotteryResultModel();
                             lotteryresult.matchID = obj.data[i].matchID;
                             lotteryresult.category = obj.data[i].category;
@@ -154,18 +153,18 @@ ResultLottery.post('/addLtryResult',async (req,res,next)=>{
                                     updateClient(userUrlArray[a]);
                                 }
                             }
-                        //}
-                        //else{
-                        //    for(var l = 0;l<Object.keys(obj.data).length;l++){
-                        //        cancelURLArray.push(cancelURL+obj.data[l].ticketNo)
-                        //    }
-                        //    for(var m = 0;m<Object.keys(cancelURLArray).length;m++){
-                        //        updatematch(cancelURLArray[m]).then(async function(result3){
-                        //            var matchresponse = JSON.stringify(result3)
-                        //            var matchobj = JSON.parse(matchresponse)
-                        //        })
-                        //    }
-                        //}
+                        }
+                        else{
+                            for(var l = 0;l<Object.keys(obj.data).length;l++){
+                                cancelURLArray.push(cancelURL+obj.data[l].ticketNo)
+                            }
+                            for(var m = 0;m<Object.keys(cancelURLArray).length;m++){
+                               updatematch(cancelURLArray[m]).then(async function(result3){
+                                    var matchresponse = JSON.stringify(result3)
+                                    var matchobj = JSON.parse(matchresponse)
+                                })
+                            }
+                        }
                     
                             
                             

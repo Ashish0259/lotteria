@@ -268,7 +268,11 @@ LotteryRouter.get('/completed',async(req,res,next) =>{
         let date = new Date(); 
         let hh = date.getHours();
         //const tickets = await LotteryModel.find({openingTime: $and[{$gte:hh},{$gt:hh}] });
-        const tickets = await LotteryModel.find({closingTime:{$lte:hh}});
+        const tickets = await LotteryModel.find({
+          $and:[
+            {closingTime:{$lte:hh}},
+            {tktstatus:"Sold"}
+          ]})
 
         const matches = tickets.filter(
           (thing,index,self) => 
@@ -285,6 +289,34 @@ LotteryRouter.get('/completed',async(req,res,next) =>{
         });
     }
 } )
+
+LotteryRouter.get('/cancelled',async(req,res,next) =>{
+  try {
+      let date = new Date(); 
+      let hh = date.getHours();
+      //const tickets = await LotteryModel.find({openingTime: $and[{$gte:hh},{$gt:hh}] });
+      const tickets = await LotteryModel.find({
+        $and:[
+          {closingTime:{$lte:hh}},
+          {tktstatus:"not_sold"}
+        ]})
+
+      const matches = tickets.filter(
+        (thing,index,self) => 
+        index === self.findIndex((t) => t.matchID === thing.matchID && t.category === thing.category))
+      res.status(200).json({
+        success:true,
+        data:matches
+      });
+  } catch (error) {
+      console.log(error.message);
+      res.status(500).json({
+        success:false,
+        message:"No Match Completed"
+      });
+  }
+} )
+
 
 
 //find tickets of a particular match
